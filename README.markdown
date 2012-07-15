@@ -18,22 +18,22 @@ To get more information about Smartdict please visit
 Quick config (translate from English to German with GoogleTranslate):
 
 ```
-    let g:SmartdictFromLang='en'
-    let g:SmartdictToLang='de'
-    let g:SmartdictDriver='google_translate'
+let g:SmartdictFromLang='en'
+let g:SmartdictToLang='de'
+let g:SmartdictDriver='google_translate'
 ```
 
 Let's say you have the text:
 
 ```
-    Hel*lo world!
+Hel*lo world!
 ```
 
 Press `<Leader>T` and you'll show the next output:
 
 ```
-    Hello - Hallo, Guten Tag, Servus
-``
+Hello - Hallo, Guten Tag, Servus
+```
 
 ## Dependencies
 
@@ -47,7 +47,7 @@ If output is `1` the ruby interpreter is builtin.
 Then you need to install `smartdict-core` gem:
 
 ```
-    gem install smartdict-core
+gem install smartdict-core
 ```
 
 Also it's recommended to use ruby1.9.3, since 1.9.2 is buggy.

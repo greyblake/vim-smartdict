@@ -63,6 +63,7 @@ class VimSmartdict
     if word.empty?
       puts "No word is found"
     else
+      translator = get_translator
       translation = translator.translate(word)
       puts Format.format_translation(translation)
     end
@@ -86,13 +87,18 @@ class VimSmartdict
     line[start_at..end_at]
   end
 
-  def translator
-    Smartdict::Translator.new(
-      :from_lang => :en,
-      :to_lang => :ru,
-      :log => false,
-      :driver => :google_translate
-    )
+  def get_translator
+    p get_opts
+    Smartdict::Translator.new(get_opts)
+  end
+
+  def get_opts
+    opts = {}
+    opts[:from_lang] = VIM.evaluate('g:SmartdictFromLang')
+    opts[:to_lang]   = VIM.evaluate('g:SmartdictToLang')
+    opts[:driver]    = VIM.evaluate('g:SmartdictDriver')
+    opts[:log]       = VIM.evaluate('g:SmartdictLog').to_s == '0' ? false : true
+    opts
   end
 
 

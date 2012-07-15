@@ -1,0 +1,145 @@
+*preview.txt*	For Vim version 7.3.	Last Change: 2011 Nov 4
+
+Description: Vim plugin to translate words
+Author:      Sergey Potapov (aka Blake) <blake131313 AT gmail DOT com>
+Version:     0.1
+Homepage:    http://smartdict.net, https://github.com/greyblake/vim-smartdict
+License:     GPLv2+ -- look it up.
+Copyright:   Copyright (C) 2012-2012 Sergey Potapov (aka Blake)
+
+             This program is free software; you can redistribute it and/or
+             modify it under the terms of the GNU General Public License as
+             published by the Free Software Foundation; either version 2 of
+             the License, or (at your option) any later version.
+
+             This program is distributed in the hope that it will be useful,
+             but WITHOUT ANY WARRANTY; without even the implied warranty of
+             MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+             General Public License for more details.
+
+             You should have received a copy of the GNU General Public License
+             along with this program; if not, write to the Free Software
+             Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+             MA 02111-1307 USA
+
+==============================================================================
+1. Contents                                                 *SmartdictContents*
+
+    1. Contents .............................. |SmartdictContents|
+    2. Intro ................................. |SmartdictIntro|
+    3. Usage ................................. |SmartdictUsage|
+    4. Dependencies .......................... |SmartdictDeps|
+    5. Configurations ........................ |SmartdictConfig|
+    6. Commands .............................. |SmartdictCommands|
+    7. Mapping ............................... |SmartdictMapping|
+    8. Known Bugs ............................ |SmartdictBugs|
+    9. Credits ............................... |SmartdictCredits|
+    10. Contact .............................. |SmartdictContact|
+
+
+==============================================================================
+2. Intro                                                       *SmartdictIntro*
+
+Vim-smartdict is wrapper around Smardict dictionary which allows you to use
+Smardict inside Vim.
+Smartdict is dictionary designed to improve you knowledge of foreign
+language. It can use different data sources (called drivers) like
+GoogleTranslate or LigvoYandex.
+To get more information about Smartdict please visit: http://smartdict.net/
+
+
+==============================================================================
+3. Usage                                                       *SmartdictUsage*
+
+Quick config (translate from English to German with GoogleTranslate): >
+
+    let g:SmartdictFromLang='en'
+    let g:SmartdictToLang='de'
+    let g:SmartdictDriver='google_translate'
+
+Text: >
+
+    Hel*lo world!
+
+Press  <Leader>T  and you'll show the next output: >
+
+    Hello - Hallo, Guten Tag, Servus
+
+==============================================================================
+4. Dependencies                                                  *SmartdictDeps*
+
+The plugin requires a builtin ruby interpreter. It means that your Vim
+should be compiled with '--enable-rubyinterp' option.
+To find out does your Vim have builtin ruby interpreter you can do the next: >
+    :echo has('ruby')
+<
+If output is '1' the ruby interpreter is builtin.
+
+Then you need to install "smartdict-core" gem: >
+    gem install smartdict-core
+
+Also it's recommended to use ruby1.9.3, since 1.9.2 is buggy.
+How to build Vim againts Ruby1.9.3:
+http://greyblake.com/blog/2012/07/15/how-to-build-vim-against-specific-ruby-version/
+
+
+==============================================================================
+5. Configurations                                              *SmartdictConfig*
+
+Before start using the plugin you should configure it by defining global
+variables.
+Configuration allows you to specify language and driver which you want to use.
+
+Example: >
+    let g:SmartdictFromLang='en'
+    let g:SmartdictToLang='de'
+    let g:SmartdictDriver='google_translate'
+
+The configuration above means "translate English words to German and
+use GoogleTranslate as a driver".
+
+Possible drivers:
+ * google_translate
+ * lingvo_yandex  (supports only en-ru translations)
+
+To not log history of translations: >
+    let g:SmartdictLog = 0
+
+==============================================================================
+6. Commands                                                 *SmartdictCommands*
+
+SmartdictTranslate - translate a word under the cursor.
+
+
+==============================================================================
+7. Mapping                                                   *SmartdictMapping*
+
+Default mapping to translate word under the cursor is <Leader>T.
+You can easy map it to other keys. For example >
+    :nmap <Leader>TT :SmartdictTranslate<CR>
+
+If you don't want default mapping to have affect you can redefined
+g:SmartdictDefaultMapping variable: >
+    let g:SmartdictDefaultMapping = 0
+
+
+==============================================================================
+9. Credits                                                   *SmartdictCredits*
+
+    * Sergey Potapov - creator and maintainer, http://greyblake.com
+
+==============================================================================
+10. Contact                                                  *SmartdictContact*
+
+To contact the author (Sergey Potapov), please email:
+blake131313 AT gmail DOT com
+
+I'll appreciate any suggestions or improvements offered for the plugin.
+
+URLs:
+https://github.com/greyblake/vim-smartdict - Vim plugin repository on Github.
+https://github.com/smartdict - Smartdict organization on Github.
+http://smartdict.net/ - Smartdict webpage.
+
+
+vim:tw=78:ts=8:ft=help:norl:

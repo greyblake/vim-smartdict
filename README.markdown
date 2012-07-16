@@ -23,6 +23,8 @@ let g:SmartdictToLang='de'
 let g:SmartdictDriver='google_translate'
 ```
 
+## With mapping keys
+
 Let's say you have the text:
 
 ```
@@ -33,6 +35,20 @@ Press `<Leader>T` and you'll show the next output:
 
 ```
 Hello - Hallo, Guten Tag, Servus
+```
+
+## With command
+
+Command:
+
+```
+:SmardictTranslate love
+```
+
+Output:
+
+```
+love - lieben, lieb haben, gern haben, Liebe, Liebling, Schatz
 ```
 
 ## Dependencies

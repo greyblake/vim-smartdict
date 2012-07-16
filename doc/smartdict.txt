@@ -108,8 +108,18 @@ To not log history of translations: >
 ==============================================================================
 6. Commands                                                 *SmartdictCommands*
 
-SmartdictTranslate - translate a word under the cursor.
 
+*SmartdictTranslate*
+
+Translate passed word.
+Example: >
+    :SmartdictTranslate hello
+    :SmartdictTranslate turn around
+
+
+*SmartdictTranslateCursor*
+
+Translate word under the cursor.
 
 ==============================================================================
 7. Mapping                                                   *SmartdictMapping*

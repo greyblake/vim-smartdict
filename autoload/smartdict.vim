@@ -35,22 +35,28 @@ require 'smartdict-core'
 class VimSmartdict
   DELIMITERS = [
     "(", ")", ".", ":", ";", "'", '"', "`", "~", "!", "@", "#", "$", "%",
-    "^", "&", "*", "+", "=", "<", ">", "?", "_", "/", " ", " "
+    "^", "&", "*", "+", "=", "<", ">", "?", "_", "/", ",", " "
   ]
   DELIMETER_REGEX = Regexp.new(DELIMITERS.map{|c| Regexp.escape(c)}.join('|'))
 
-  def self.translate
+  def self.translate_cursor
     ensure_smartidct_running
-    new.translate
+    new.translate_cursor
+  end
+
+  def self.translate(text)
+    ensure_smartidct_running
+    new.translate(text)
   end
 
   def self.ensure_smartidct_running
     unless @smartdict_running
-      Smartdict.env = :test
+      Smartdict.env = :user
       Smartdict.run
       @smartdict_running = true
     end
   end
+
 
   def initialize
     win = VIM::Window.current
@@ -58,20 +64,23 @@ class VimSmartdict
     @buf = VIM::Buffer.current
   end
 
-  def translate
-    word = get_current_word.strip
-    if word.empty?
-      puts "No word is found"
-    else
-      translator = get_translator
-      translation = translator.translate(word)
-      puts Format.format_translation(translation)
-    end
-  rescue Smartdict::TranslationNotFound
-    puts "No translation is found for '#{word}'"
+  def translate_cursor
+    translate(word_under_cursor.strip)
   end
 
-  def get_current_word
+  def translate(text)
+    if text.empty?
+      print "No word is found"
+    else
+      translator = get_translator
+      translation = translator.translate(text)
+      print Format.format_translation(translation)
+    end
+  rescue Smartdict::TranslationNotFound
+    print "No translation is found for '#{text}'"
+  end
+
+  def word_under_cursor
     line     = @buf[@row]
     start_at = @col
     end_at   = @col
@@ -88,7 +97,6 @@ class VimSmartdict
   end
 
   def get_translator
-    p get_opts
     Smartdict::Translator.new(get_opts)
   end
 
@@ -133,9 +141,18 @@ function! s:init()
 endfunction
 
 
-function! smartdict#translate()
-call s:init()
+function! smartdict#translate_cursor()
+    call s:init()
+ruby <<END_OF_RUBY
+    VimSmartdict.translate_cursor
+END_OF_RUBY
+endfunction
+
+
+function! smartdict#translate(text)
+    call s:init()
 ruby << END_OF_RUBY
-    VimSmartdict.translate
+    text = VIM.evaluate('a:text')
+    VimSmartdict.translate(text)
 END_OF_RUBY
 endfunction

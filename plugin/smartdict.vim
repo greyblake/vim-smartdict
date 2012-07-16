@@ -40,9 +40,17 @@ function s:PreviewVerifyRuby()
 endfunction
 
 
-function! s:SmartdictTranslate()
+function! s:SmartdictTranslateCursor()
     if(s:PreviewVerifyRuby())
-        call smartdict#translate()
+        call smartdict#translate_cursor()
+    endif
+endfunction
+
+
+function! SmartdictTranslate(...)
+    let text = join(a:000, " ")
+    if(s:PreviewVerifyRuby())
+        call smartdict#translate(text)
     endif
 endfunction
 
@@ -64,8 +72,9 @@ if(!exists('g:SmartdictDefaultMapping'))
 endif
 
 
-command! SmartdictTranslate call s:SmartdictTranslate()
+command! -nargs=*  SmartdictTranslate call SmartdictTranslate(<f-args>)
+command! SmartdictTranslateCursor call s:SmartdictTranslateCursor()
 
 if g:SmartdictDefaultMapping
-    :nmap <Leader>T :SmartdictTranslate<CR>
+    :nmap <Leader>T :SmartdictTranslateCursor<CR>
 endif

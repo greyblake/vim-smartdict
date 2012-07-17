@@ -30,11 +30,11 @@ endif
 let loaded_smartdict = 1
 
 
-function s:PreviewVerifyRuby()
+function s:SmartdictVerifyRuby()
     if has('ruby')
         return 1
     else
-        echo 'To use Preview plugin you should compile vim with --enable-rubyinterp option'
+        echo 'To use Smartdict plugin you should compile vim with --enable-rubyinterp option'
         return 0
     endif
 endfunction
